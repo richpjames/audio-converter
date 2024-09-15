@@ -5,6 +5,7 @@ import multer from "multer";
 const fileFilter = (req, file, cb) => {
   // Allowed file types
   const fileTypes = /flac/;
+  console.log({ file });
   // Check the file extension
   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
   // Check the mime type
@@ -33,4 +34,5 @@ const storage = multer.diskStorage({
 export const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
+  preservePath: true,
 });
