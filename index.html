@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to My Website</h1>
-        </header>
-        <main>
-            <form id="form" method="post" action="/upload" enctype="multipart/form-data">
-
-                <input type="file" id="file" multiple/>
-                <button>Submit</button>
-            </form>
-        </main>
-        <footer>
-            <p>&copy; 2023 My Website</p>
-        </footer>
-
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Flac to Mp3 converter</h1>
+    </header>
+    <main>
+      <form id="form" method="post" enctype="multipart/form-data">
+        <input type="file" id="file" multiple />
+        <button>Submit</button>
+        <audio id="output-audio" controls></audio>
+      </form>
+      <p id="message"></p>
+    </main>
+    <footer>
+      <script type="module" src="http://localhost:3000/main.js"></script>
+    </footer>
+  </body>
 </html>
