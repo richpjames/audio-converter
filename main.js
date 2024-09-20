@@ -53,20 +53,27 @@ const transcode = async ({ target: { files } }) => {
       ),
     });
   }
-  const { name } = files[0];
-  try {
-    await ffmpeg.writeFile(name, await fetchFile(files[0]));
-  } catch (e) {
-    console.log(e);
-  }
-  message.innerHTML = "Start transcoding";
-  await ffmpeg.exec(["-i", name, "output.mp3"]);
-  message.innerHTML = "Complete transcoding";
-  const data = await ffmpeg.readFile("output.mp3");
+  Promise.all(
+    Array.from(files).map(async (file) => {
+      try {
+        ffmpeg.writeFile(file.name, await fetchFile(file));
+      } catch (e) {
+        console.log(e);
+      }
 
-  const audioPlayer = document.getElementById("output-audio");
-  audioPlayer.src = URL.createObjectURL(
-    new Blob([data.buffer], { type: "audio/mp3" })
+      message.innerHTML = "Start transcoding";
+      await ffmpeg.exec(["-i", file.name, "output.mp3"]);
+      message.innerHTML = "Complete transcoding";
+      const data = await ffmpeg.readFile("output.mp3");
+
+      const audioPlayer = document.createElement("a");
+      message.appendChild(audioPlayer);
+
+      audioPlayer.innerHTML = file.name;
+      audioPlayer.href = URL.createObjectURL(
+        new Blob([data.buffer], { type: "audio/mp3" })
+      );
+    })
   );
 };
 
